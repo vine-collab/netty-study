@@ -5,7 +5,6 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.channel.socket.nio.NioSocketChannel;
 
 /**
  * @author hekai
@@ -19,10 +18,11 @@ public class MyChatServer {
 
         try {
             ServerBootstrap serverBootstrap = new ServerBootstrap();
-            serverBootstrap.group(bossGroup, wokerGroup).channel(NioServerSocketChannel.class).childHandler(new MyChatServerInitializer());
+            serverBootstrap.group(bossGroup, wokerGroup).channel(NioServerSocketChannel.class)
+                    .childHandler(new MyChatServerInitializer());
             ChannelFuture future = serverBootstrap.bind(8899).sync();
             future.channel().closeFuture().sync();
-         } finally {
+        } finally {
             bossGroup.shutdownGracefully();
             wokerGroup.shutdownGracefully();
         }

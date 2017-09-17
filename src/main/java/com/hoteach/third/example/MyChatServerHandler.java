@@ -7,15 +7,13 @@ import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
 
-import java.nio.channels.SocketChannel;
-
 /**
  * 服务端处理器
  *
  * @author hekai
  * @create 2017-09-17-13:28
  */
-public class MyChatHandler extends SimpleChannelInboundHandler<String> {
+public class MyChatServerHandler extends SimpleChannelInboundHandler<String> {
 
     private static ChannelGroup channelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
@@ -25,9 +23,10 @@ public class MyChatHandler extends SimpleChannelInboundHandler<String> {
         Channel channel = ctx.channel();
         channelGroup.forEach(ch -> {
             if(channel != ch){
-                ch.writeAndFlush(channel.remoteAddress() + "发送消息:" + msg);
+                channel.writeAndFlush(channel.remoteAddress() + "发送消息:" + msg + "\n");
+
             } else {
-                ch.writeAndFlush("[自己]" + msg + "\n");
+                channel.writeAndFlush("[自己]" + msg + "\n");
             }
         });
     }
@@ -36,8 +35,6 @@ public class MyChatHandler extends SimpleChannelInboundHandler<String> {
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
         Channel channel = ctx.channel();
         channelGroup.writeAndFlush("[服务器] - " + channel.remoteAddress() + " 加入\n");
-        channelGroup.add(channel);
-
         // 保存已经建立连接的channel
         channelGroup.add(channel);
     }
@@ -52,13 +49,13 @@ public class MyChatHandler extends SimpleChannelInboundHandler<String> {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         Channel channel = ctx.channel();
-        System.out.println(channel.remoteAddress() + " 上线");
+        System.out.println(channel.remoteAddress() + " 上线\n");
     }
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         Channel channel = ctx.channel();
-        System.out.println(channel.remoteAddress() + " 下线");
+        System.out.println(channel.remoteAddress() + " 下线\n");
     }
 
     @Override

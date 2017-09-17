@@ -1,5 +1,6 @@
 package com.hoteach.third.example;
 
+import com.hoteach.second.example.MyClientHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -12,15 +13,15 @@ import io.netty.util.CharsetUtil;
 
 /**
  * @author hekai
- * @create 2017-09-17-13:19
+ * @create 2017-09-17-19:11
  */
-public class MyChatServerInitializer extends ChannelInitializer<SocketChannel> {
+public class MyChatClientInitializer extends ChannelInitializer<SocketChannel> {
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
         ChannelPipeline pipeline = ch.pipeline();
         pipeline.addLast(new DelimiterBasedFrameDecoder(4096, Delimiters.lineDelimiter()));
         pipeline.addLast(new StringDecoder(CharsetUtil.UTF_8));
         pipeline.addLast(new StringEncoder(CharsetUtil.UTF_8));
-        pipeline.addLast(new MyChatServerHandler());
+        pipeline.addLast(new MyClientHandler());
     }
 }
