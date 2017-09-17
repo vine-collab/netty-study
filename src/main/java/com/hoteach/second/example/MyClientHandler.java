@@ -1,4 +1,4 @@
-package com.hotech.second.example;
+package com.hoteach.second.example;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

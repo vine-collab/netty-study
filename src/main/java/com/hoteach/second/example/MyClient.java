@@ -1,4 +1,4 @@
-package com.hotech.second.example;
+package com.hoteach.second.example;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;

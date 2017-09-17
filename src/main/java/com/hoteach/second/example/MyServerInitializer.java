@@ -1,4 +1,4 @@
-package com.hotech.second.example;
+package com.hoteach.second.example;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
