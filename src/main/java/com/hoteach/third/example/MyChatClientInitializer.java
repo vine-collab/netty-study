@@ -1,6 +1,5 @@
 package com.hoteach.third.example;
 
-import com.hoteach.second.example.MyClientHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -22,6 +21,6 @@ public class MyChatClientInitializer extends ChannelInitializer<SocketChannel> {
         pipeline.addLast(new DelimiterBasedFrameDecoder(4096, Delimiters.lineDelimiter()));
         pipeline.addLast(new StringDecoder(CharsetUtil.UTF_8));
         pipeline.addLast(new StringEncoder(CharsetUtil.UTF_8));
-        pipeline.addLast(new MyClientHandler());
+        pipeline.addLast(new MyChatClientHandler());
     }
 }
