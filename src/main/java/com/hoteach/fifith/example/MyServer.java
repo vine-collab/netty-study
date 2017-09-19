@@ -12,6 +12,8 @@ import io.netty.handler.logging.LoggingHandler;
 import java.net.InetSocketAddress;
 
 /**
+ * websocket
+ *
  * @author hekai
  * @create 2017-09-18-20:12
  */
