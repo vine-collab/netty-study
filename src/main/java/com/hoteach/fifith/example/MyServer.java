@@ -1,6 +1,5 @@
 package com.hoteach.fifith.example;
 
-import com.hoteach.fourth.example.MyServerInitializer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
@@ -24,7 +23,7 @@ public class MyServer {
         try {
             ServerBootstrap serverBootstrap = new ServerBootstrap();
             serverBootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class).handler(new
-                    LoggingHandler(LogLevel.INFO)).childHandler(new MyServerInitializer());
+                    LoggingHandler(LogLevel.INFO)).childHandler(new WebSocketChannelInitializer());
 
             ChannelFuture future = serverBootstrap.bind(new InetSocketAddress(8899)).sync();
             future.channel().closeFuture().sync();
