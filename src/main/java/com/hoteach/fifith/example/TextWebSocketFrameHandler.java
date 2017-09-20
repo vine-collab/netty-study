@@ -4,7 +4,6 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 
-import javax.lang.model.util.SimpleAnnotationValueVisitor6;
 import java.time.LocalDateTime;
 
 /**
@@ -21,6 +20,17 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
 
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
-        System.out.println("handlerAdded:" + ctx.channel().id());
+        System.out.println("handlerAdded:" + ctx.channel().id().asLongText());
+    }
+
+    @Override
+    public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("handlerRemoved" + ctx.channel().id().asLongText());
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        System.out.println("发生异常");
+        ctx.close();
     }
 }
