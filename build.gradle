@@ -27,9 +27,10 @@ dependencies {
 
 }
 buildscript {
-//    repositories {
-//        mavenCentral()
-//    }
+    repositories {
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
+    }
     dependencies {
         // ASSUMES GRADLE 2.12 OR HIGHER. Use plugin version 0.7.5 with earlier
         // gradle versions
