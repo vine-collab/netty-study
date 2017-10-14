@@ -5,6 +5,7 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
 
+import java.time.LocalDateTime;
 import java.util.Iterator;
 
 /**
@@ -29,34 +30,56 @@ public class GrpcClient {
         }
 
         System.out.println("---------------------------------------------");
+        /**
+         StreamObserver<StudentResponseList> studentResponseListStreamObserver = new StreamObserver<StudentResponseList>() {
+        @Override public void onNext(StudentResponseList value) {
+        value.getStudentResponseList().forEach(item -> {
+        System.out.println(item);
+        });
+        }
 
-        StreamObserver<StudentResponseList> studentResponseListStreamObserver = new StreamObserver<StudentResponseList>() {
+        @Override public void onError(Throwable t) {
+        System.out.println("onError:" + t.getMessage());
+        }
+
+        @Override public void onCompleted() {
+        System.out.println("Completed");
+        }
+        };
+
+         StreamObserver<StudentRequest> studentRequestStreamObserver = stub.getStudentsWrapperByAges(studentResponseListStreamObserver);
+         studentRequestStreamObserver.onNext(StudentRequest.newBuilder().setAge(20).build());
+         studentRequestStreamObserver.onNext(StudentRequest.newBuilder().setAge(30).build());
+         studentRequestStreamObserver.onNext(StudentRequest.newBuilder().setAge(40).build());
+         studentRequestStreamObserver.onNext(StudentRequest.newBuilder().setAge(50).build());
+
+         studentRequestStreamObserver.onCompleted();
+
+         Thread.sleep(5000);
+         **/
+
+        StreamObserver<StreamRequest> requestStreamObserver = stub.biTalk(new StreamObserver<StreamResponse>() {
             @Override
-            public void onNext(StudentResponseList value) {
-                value.getStudentResponseList().forEach(item -> {
-                    System.out.println(item);
-                });
+            public void onNext(StreamResponse value) {
+                System.out.println(value.getResponseInfo());
             }
 
             @Override
             public void onError(Throwable t) {
-                System.out.println("onError:" + t.getMessage());
+                System.out.println(t.getMessage());
             }
 
             @Override
             public void onCompleted() {
-                System.out.println("Completed");
+                System.out.println("onCompleted");
             }
-        };
+        });
 
-        StreamObserver<StudentRequest> studentRequestStreamObserver = stub.getStudentsWrapperByAges(studentResponseListStreamObserver);
-        studentRequestStreamObserver.onNext(StudentRequest.newBuilder().setAge(20).build());
-        studentRequestStreamObserver.onNext(StudentRequest.newBuilder().setAge(30).build());
-        studentRequestStreamObserver.onNext(StudentRequest.newBuilder().setAge(40).build());
-        studentRequestStreamObserver.onNext(StudentRequest.newBuilder().setAge(50).build());
 
-        studentRequestStreamObserver.onCompleted();
+        for (int i = 0; i < 10; i++) {
+            requestStreamObserver.onNext(StreamRequest.newBuilder().setRequestInfo(LocalDateTime.now().toString()).build());
 
-        Thread.sleep(5000);
+            Thread.sleep(5000);
+        }
     }
 }
