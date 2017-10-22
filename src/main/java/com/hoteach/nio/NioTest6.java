@@ -4,6 +4,7 @@ import java.nio.Buffer;
 import java.nio.ByteBuffer;
 
 /**
+ * slice buffer和原有buffer底层共享数组
  * @author hekai
  * @create 2017-10-22-10:26
  */
