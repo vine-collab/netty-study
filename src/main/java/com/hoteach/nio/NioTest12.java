@@ -14,6 +14,7 @@ import java.util.Set;
  * @create 2017-10-22-15:14
  */
 public class NioTest12 {
+
     public static void main(String[] args) throws Exception {
         int[] ports = new int[5];
         for (int i = 0; i < ports.length; i++) {
@@ -42,6 +43,7 @@ public class NioTest12 {
                 if(selectionKey.isAcceptable()){
                     ServerSocketChannel serverSocketChannel = (ServerSocketChannel) selectionKey.channel();
                     SocketChannel socketChannel = serverSocketChannel.accept();
+                    socketChannel.configureBlocking(false);
                     socketChannel.register(selector, SelectionKey.OP_READ);
                     iterator.remove();
                     System.out.println("获得客户端的连接：" + socketChannel);
