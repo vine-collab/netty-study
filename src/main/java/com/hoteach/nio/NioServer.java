@@ -59,6 +59,7 @@ public class NioServer {
                     e.printStackTrace();
                 }
             });
+            selectionKeys.clear();
         }
     }
 }
