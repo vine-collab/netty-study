@@ -51,9 +51,21 @@ public class NioServer {
                             String receivedMessage = String.valueOf(charset.decode(readBuffer).array());
                             System.out.println(client + ":" + receivedMessage);
 
+                            String sendKey = null;
+                            for (Map.Entry<String, SocketChannel> entry : clientMap.entrySet()) {
+                                if(client == entry.getValue()){
+                                    sendKey = entry.getKey();
+                                    break;
+                                }
+                            }
 
+                            for(Map.Entry<String, SocketChannel> entry : clientMap.entrySet()){
+                                SocketChannel value = entry.getValue();
+                                ByteBuffer writeBuffer = ByteBuffer.allocate(1024);
+                                writeBuffer.put((sendKey + ":" + receivedMessage).getBytes());
+                                value.write(writeBuffer);
+                            }
                         }
-                        
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
